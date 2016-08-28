@@ -1,0 +1,62 @@
+extends layout
+
+mixin row
+  .pure-g
+    .pure-u-1-1
+      block
+
+mixin alternatives(questionNr, alts)
+  .alternatives
+    .pure-form
+      ul
+        each alt, index in alts
+          li
+            input(id="question-#{questionNr}-#{index}" type='radio', name="question-#{questionNr}" value="#{index}")
+            label(for="question-#{questionNr}-#{index}") !{alt}
+            .check
+
+mixin text-question(questionNr, text)
+  +row
+    .question
+      //- span.number #{questionNr}
+      h2.text!= text
+  +row
+    block
+
+block content
+  +row
+    h1.title Simons <span class="line-through">30 <figure></figure><figure></figure></span> 28 års quiz
+    .instructions
+      h2.instruction <b>1.</b> Bilda ett lag <span class="instruction small">(2 - 4 pers)</span>
+      h2.instruction <b>2.</b> Kom på ett lagnamn
+      input(type="text" id="team-name" placeholder="Lagnamn")
+      h2.instruction <b>3.</b> Ta en lagbild
+
+  +row
+    label(for="team-picture" class="custom-file-upload") <i class="fa fa-camera-retro fa-lg" aria-hidden="true"></i> Fota här!
+    input(type="file" id="team-picture" accept="image/*;capture=camera")
+
+    img.pure-img(id="avatar" src="#")
+
+  each question, index in questions
+    +text-question(index, question.question)
+      +alternatives(index, question.alternatives)
+
+  +row
+    h2 Utslagsfråga
+
+    div.outpunch
+      h2 Vardagsrumslampan som Simon har byggt ihop består av&nbsp;
+        output(for="punchout" id="volume") 250
+        |  pusselbitar
+      input(type="range" min="50" max="250" value="150" id="punchout" step="1" oninput="outputUpdate(value)")
+
+  +row
+    button.pure-button.button-send.button-xlarge <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i> Skicka svar
+
+  .score-overlay
+    h1 Poäng
+    h2.score
+
+    img.pure-img(src="/images/giphy3.gif")
+

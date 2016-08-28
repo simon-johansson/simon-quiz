@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  if scores[0]
+    h1 Highscore <span>kör Simonquizet på <a href="#">quiz.simon-johansson.com</a></span>
+  else
+    h1 Highscore
+
+  if scores[0]
+    .leader
+      div.score
+        h2 1. #{scores[0].name}
+        .img-wrapper
+          if scores[0].img
+            img.pure-img(src="/images/#{scores[0].img}")
+          else
+            img.pure-img(src="/images/team.jpg")
+          number #{scores[0].score}p
+        span.crown 👑
+  else
+    span.big-text Kör Simonquizet på<br>quiz.simon-johansson.com
+
+  //- .wrapper
+  each score, index in scores
+    if index
+        div.score
+          div.inner-wrap
+            h2 #{index + 1}. #{score.name}
+            if score.img
+              img.pure-img(src="/images/#{score.img}")
+            else
+              img.pure-img(src="/images/team.jpg")
+            number #{score.score}p
+
+  button#clean
